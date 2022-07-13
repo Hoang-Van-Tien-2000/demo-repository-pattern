@@ -9,7 +9,8 @@ class Product extends Model
 {
     use HasFactory;
 
-    
+    const INTERNAL_SERVER_ERROR = 500;
+    const UNPROCESSABLE_ENTITY = 422; 
     
     protected $table = "products";
     

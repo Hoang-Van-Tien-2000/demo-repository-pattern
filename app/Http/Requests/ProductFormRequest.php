@@ -18,7 +18,7 @@ class ProductFormRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,8 +28,21 @@ class ProductFormRequest extends FormRequest
      */
     public function rules()
     {
+        return  [
         
+            'name' => 'required|string|min:3',
+            'price' =>'required|integer' 
+        ];
     }
 
-  
+    protected function failedValidation(Validator $validator) 
+    {
+
+        $errors = (new ValidationException($validator))->errors();
+        throw new HttpResponseException(response()->json(
+            [
+                'error' => $errors,
+                'status_code' => Product::UNPROCESSABLE_ENTITY,
+            ]));
+    }
 }
